@@ -1,0 +1,19 @@
+﻿@if (Visible)
+{
+    <div class="overlay">
+        <div class="overlay-content">
+            <h2>🎉 You solved it!</h2>
+            <p>Moves: @Moves</p>
+
+            <button @onclick="OnRetry">Try Again</button>
+            <button @onclick="OnNew">New Image</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Visible { get; set; }
+    [Parameter] public int Moves { get; set; }
+    [Parameter] public EventCallback OnRetry { get; set; }
+    [Parameter] public EventCallback OnNew { get; set; }
+}

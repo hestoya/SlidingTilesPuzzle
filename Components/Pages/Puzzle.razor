@@ -1,0 +1,51 @@
+﻿@page "/puzzle"
+@rendermode InteractiveServer
+
+@using SlidingTilesPuzzle.Models
+@using SlidingTilesPuzzle.Services
+@using SlidingTilesPuzzle.Components.Puzzle
+
+@inject PuzzleService PuzzleServiceInstance
+@inject ImageService ImageServiceInstance
+
+<h3>Sliding Puzzle</h3>
+<p>Moves: @Moves</p>
+
+<p>@ImageUrl</p>
+<img src="@ImageUrl" width="300" height="300" />
+
+<div class="puzzle-layout">
+    <PuzzleBoard Tiles="Tiles"
+                 ImageUrl="ImageUrl"
+                 OnTileClick="MoveTile" />
+</div>
+
+@code {
+    List<Tile> Tiles = new();
+    string ImageUrl = "";
+    int Moves = 0;
+
+    protected override void OnInitialized()
+    {
+        NewGame();
+    }
+
+    void NewGame()
+    {
+        // Hardcoded image for now so tiles are visible
+        ImageUrl = "https://picsum.photos/600/600";
+
+        Tiles = PuzzleServiceInstance.CreateTiles();
+        PuzzleServiceInstance.ShuffleSolvable(Tiles);
+        Moves = 0;
+    }
+
+    void MoveTile(Tile tile)
+    {
+        var empty = Tiles.First(t => t.IsEmpty);
+        if (!PuzzleServiceInstance.CanMove(tile, empty)) return;
+
+        (tile.CurrentIndex, empty.CurrentIndex) = (empty.CurrentIndex, tile.CurrentIndex);
+        Moves++;
+    }
+}

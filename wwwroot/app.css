@@ -27,3 +27,58 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+/* ===== Sliding Puzzle ===== */
+
+.puzzle-layout {
+    display: flex;
+    gap: 24px;
+}
+
+.board {
+    position: relative;
+    width: 600px; /* 3 tiles x 200px */
+    height: 600px;
+    border: 2px solid #333;
+}
+
+.tile {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-size: 600px 600px; /* must match board size */
+    transition: transform 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-content {
+    background: #111;
+    padding: 24px;
+    color: white;
+    border-radius: 12px;
+}
+
+
+.nav {
+    padding: 10px;
+    background: #111;
+    display: flex;
+    gap: 15px;
+}
+
+    .nav a {
+        color: white;
+        text-decoration: none;
+    }
+
+
