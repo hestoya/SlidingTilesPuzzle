@@ -1,10 +1,14 @@
 using SlidingTilesPuzzle.Components;
+using SlidingTilesPuzzle.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<PuzzleService>();
+
 
 var app = builder.Build();
 
