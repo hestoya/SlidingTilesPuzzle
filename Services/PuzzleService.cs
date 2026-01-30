@@ -21,18 +21,20 @@ namespace SlidingTilesPuzzle.Services
         public void ShuffleSolvable(List<Tile> tiles)
         {
             var rnd = new Random();
-            int[] pos;
+            int[] positions;
 
             do
             {
-                pos = Enumerable.Range(0, 9)
+                positions = Enumerable.Range(0, 8)
                     .OrderBy(_ => rnd.Next())
                     .ToArray();
             }
-            while (!IsSolvable(pos));
+            while (!IsSolvable(positions));
 
-            for (int i = 0; i < tiles.Count; i++)
-                tiles[i].CurrentIndex = pos[i];
+            for (int i = 0; i < 8; i++)
+                tiles[i].CurrentIndex = positions[i];
+
+            tiles.First(t => t.IsEmpty).CurrentIndex = 8;
         }
 
         public bool CanMove(Tile tile, Tile empty)
@@ -47,12 +49,14 @@ namespace SlidingTilesPuzzle.Services
 
         bool IsSolvable(int[] p)
         {
-            int inv = 0;
+            int inversions = 0;
+
             for (int i = 0; i < p.Length; i++)
                 for (int j = i + 1; j < p.Length; j++)
                     if (p[i] != 8 && p[j] != 8 && p[i] > p[j])
-                        inv++;
-            return inv % 2 == 0;
+                        inversions++;
+
+            return inversions % 2 == 0;
         }
     }
 }

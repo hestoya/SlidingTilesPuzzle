@@ -4,7 +4,7 @@
     {
         public string GenerateImageUrl()
         {
-            return $"https://source.unsplash.com/600x600/?aesthetic&sig={Guid.NewGuid()}";
+            return $"https://picsum.photos/600/600";
         }
     }
 }

@@ -1,51 +1,75 @@
 ﻿@page "/puzzle"
 @rendermode InteractiveServer
 
+@using SlidingTilesPuzzle.Components.Puzzle
 @using SlidingTilesPuzzle.Models
 @using SlidingTilesPuzzle.Services
-@using SlidingTilesPuzzle.Components.Puzzle
-
-@inject PuzzleService PuzzleServiceInstance
-@inject ImageService ImageServiceInstance
+@inject PuzzleService Puzzles
+@inject ImageService Images
+@inject NavigationManager Navigation
 
 <h3>Sliding Puzzle</h3>
-<p>Moves: @Moves</p>
+<p>Moves Counter: @Moves</p>
 
-<p>@ImageUrl</p>
-<img src="@ImageUrl" width="300" height="300" />
+<button class="refresh-btn" @onclick="NewGame">
+    New Game
+</button>
 
 <div class="puzzle-layout">
-    <PuzzleBoard Tiles="Tiles"
-                 ImageUrl="ImageUrl"
-                 OnTileClick="MoveTile" />
+    <ReferenceImage ImageUrl="@ImageUrl" />
+
+    <div class="board-wrapper" tabindex="0">
+        <PuzzleBoard Tiles="Tiles"
+                     ImageUrl="@ImageUrl"
+                     OnTileClick="MoveTile" />
+
+        <WinOverlay Visible="IsSolved"
+                    Moves="Moves"
+                    OnRetry="Reshuffle"
+                    OnNew="NewGame" />
+    </div>
 </div>
 
 @code {
-    List<Tile> Tiles = new();
+    List<Tile> Tiles = [];
     string ImageUrl = "";
-    int Moves = 0;
+    int Moves;
+    bool IsSolved;
 
-    protected override void OnInitialized()
-    {
-        NewGame();
-    }
+    protected override void OnInitialized() => StartPuzzle();
 
     void NewGame()
     {
-        // Hardcoded image for now so tiles are visible
-        ImageUrl = "https://picsum.photos/600/600";
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
 
-        Tiles = PuzzleServiceInstance.CreateTiles();
-        PuzzleServiceInstance.ShuffleSolvable(Tiles);
+    void StartPuzzle()
+    {
+        ImageUrl = Images.GenerateImageUrl();
+        Tiles = Puzzles.CreateTiles();
+        Puzzles.ShuffleSolvable(Tiles);
         Moves = 0;
+        IsSolved = false;
+    }
+
+    void Reshuffle()
+    {
+        Puzzles.ShuffleSolvable(Tiles);
+        Moves = 0;
+        IsSolved = false;
     }
 
     void MoveTile(Tile tile)
     {
-        var empty = Tiles.First(t => t.IsEmpty);
-        if (!PuzzleServiceInstance.CanMove(tile, empty)) return;
+        if (IsSolved) return;
 
-        (tile.CurrentIndex, empty.CurrentIndex) = (empty.CurrentIndex, tile.CurrentIndex);
+        var empty = Tiles.First(t => t.IsEmpty);
+        if (!Puzzles.CanMove(tile, empty)) return;
+
+        (tile.CurrentIndex, empty.CurrentIndex) =
+        (empty.CurrentIndex, tile.CurrentIndex);
+
         Moves++;
+        IsSolved = Puzzles.IsSolved(Tiles);
     }
 }

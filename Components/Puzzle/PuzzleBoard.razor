@@ -4,30 +4,23 @@
     @foreach (var tile in Tiles.Where(t => !t.IsEmpty))
     {
         <div class="tile"
-             style="@TileStyle(tile)"
+             style="
+                    background-image:url('https://picsum.photos/600/600');
+                    background-position:@Bg(tile.Index);
+                    transform:@Pos(tile.CurrentIndex)"
              @onclick="() => OnTileClick.InvokeAsync(tile)">
         </div>
     }
 </div>
 
 @code {
-    [Parameter] public List<Tile> Tiles { get; set; } = new();
-    [Parameter] public string ImageUrl { get; set; } = "https://picsum.photos/600/600";
+    [Parameter] public List<Tile> Tiles { get; set; } = [];
+    [Parameter] public string ImageUrl { get; set; } = "";
     [Parameter] public EventCallback<Tile> OnTileClick { get; set; }
 
+    const int Size = 3;
     const int TileSize = 200;
-    const int BoardSize = 600;
 
-    string TileStyle(Tile tile)
-    {
-        if (string.IsNullOrWhiteSpace(ImageUrl))
-            return "";
-
-        return $"background-image: url('https://picsum.photos/600/600'); " +
-               $"background-size: {BoardSize}px {BoardSize}px; " +
-               $"background-position: {-(tile.Index % 3) * TileSize}px {-(tile.Index / 3) * TileSize}px; " +
-               $"width: {TileSize}px; height: {TileSize}px; " +
-               $"position: absolute; " +
-               $"transform: translate({(tile.CurrentIndex % 3) * TileSize}px, {(tile.CurrentIndex / 3) * TileSize}px);";
-    }
+    string Bg(int i) => $"{-(i % 3) * TileSize}px {-(i / 3) * TileSize}px";
+    string Pos(int i) => $"translate({(i % 3) * TileSize}px, {(i / 3) * TileSize}px)";
 }
