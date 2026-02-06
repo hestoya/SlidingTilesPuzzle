@@ -1,7 +1,54 @@
 ﻿@page "/"
+@inject NavigationManager Nav
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="vh-100 d-flex flex-column justify-content-center align-items-center text-center">
+    <h1 class="title">SLIDING TILES PUZZLE</h1>
 
-Welcome to your new app.
+    <h3 class="challenge pb-5">
+        Do you dare to try this puzzle?
+    </h3>
+
+    <button class="start-btn" @onclick="Start">
+        START
+    </button>
+
+    <span class="position-fixed bottom-0 end-0 mb-4 me-4 p-3" @onclick="ToggleSound">
+        <i class="@soundIcon"></i>
+    </span>
+</div>
+
+
+@code {
+    // Track whether the game loop sound is currently playing
+    private bool isSoundPlaying = false;
+    private string soundIcon => isSoundPlaying ? "bi-volume-up" : "bi-volume-mute";
+
+    // Handle the sound toggle action
+    async Task ToggleSound()
+    {
+        if (isSoundPlaying)
+        {
+            // Stop the game loop sound
+            await JsRuntime.InvokeVoidAsync("stopHomeLoopSound");
+        }
+        else
+        {
+            // Play the game loop sound
+            await JsRuntime.InvokeVoidAsync("playHomeLoopSound");
+        }
+
+        // Toggle the sound state
+        isSoundPlaying = !isSoundPlaying;
+    }
+
+    async Task Start()
+    {
+        // Stop the home loop sound (if it's playing)
+        await JsRuntime.InvokeVoidAsync("stopHomeLoopSound");
+        await JsRuntime.InvokeVoidAsync("playStartButtonSound");  // Play start button sound
+        Nav.NavigateTo("/puzzle");  // Navigate to the puzzle page
+    }
+}

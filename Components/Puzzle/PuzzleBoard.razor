@@ -12,7 +12,7 @@
 
 @code {
     [Parameter] public List<Tile> Tiles { get; set; } = new();
-    [Parameter] public string ImageUrl { get; set; } = "https://picsum.photos/600/600";
+    [Parameter] public string ImageUrl { get; set; } = "https://picsum.photos/1000/1000";
     [Parameter] public EventCallback<Tile> OnTileClick { get; set; }
 
 
@@ -24,7 +24,7 @@
         if (string.IsNullOrWhiteSpace(ImageUrl))
             return "";
 
-        return $"background-image: url('https://picsum.photos/600/600'); " +
+        return $"background-image: url('https://picsum.photos/1000/1000'); " +
                $"background-size: {BoardSize}px {BoardSize}px; " +
                $"background-position: {-(tile.Index % 3) * TileSize}px {-(tile.Index / 3) * TileSize}px; " +
                $"width: {TileSize}px; height: {TileSize}px; " +

@@ -7,26 +7,41 @@
 @inject PuzzleService Puzzles
 @inject ImageService Images
 @inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
 
-<h3>Sliding Puzzle</h3>
-<p>Moves Counter: @Moves</p>
+<div class="d-flex flex-column min-vh-100">
+    <h1>SLIDING TILES PUZZLE...</h1>
 
-<button class="refresh-btn" @onclick="NewGame">
-    New Game
-</button>
+    <div class="flex-grow-1 d-flex justify-content-center align-items-center text-center">
+        <div class="puzzle-layout gap-5">
+            <div class="d-flex flex-column gap-4 justify-content-center">
+                <p class="text-center">Moves Counter: @Moves</p>
 
-<div class="puzzle-layout">
-    <ReferenceImage ImageUrl="@ImageUrl" />
+                <button class="refresh-btn" @onclick="NewGame">
+                    NEW GAME
+                </button>
 
-    <div class="board-wrapper" tabindex="0">
-        <PuzzleBoard Tiles="Tiles"
-                     ImageUrl="@ImageUrl"
-                     OnTileClick="MoveTile" />
+                <button class="reset-btn" @onclick="Reshuffle">
+                    RESET PUZZLE
+                </button>
 
-        <WinOverlay Visible="IsSolved"
-                    Moves="Moves"
-                    OnRetry="Reshuffle"
-                    OnNew="NewGame" />
+                <div class="d-flex flex-column">
+                    <p class="text-center">Visual Hint: </p>
+                    <ReferenceImage ImageUrl="@ImageUrl" />
+                </div>   
+            </div>
+
+            <div class="board-wrapper" tabindex="0">
+                <PuzzleBoard Tiles="Tiles"
+                             ImageUrl="@ImageUrl"
+                             OnTileClick="MoveTile" />
+
+                <WinOverlay Visible="IsSolved"
+                            Moves="Moves"
+                            OnRetry="Restart"
+                            OnNew="NewGame" />
+            </div>
+        </div>
     </div>
 </div>
 
@@ -35,12 +50,18 @@
     string ImageUrl = "";
     int Moves;
     bool IsSolved;
+    bool isInitialized = false;
+    bool isFirstRender = true;
 
-    protected override void OnInitialized() => StartPuzzle();
+    protected override void OnInitialized()
+    {
+        StartPuzzle();
+    }
 
-    void NewGame()
+    async Task NewGame()
     {
         Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+        await PlayClickButtonSound();
     }
 
     void StartPuzzle()
@@ -50,19 +71,30 @@
         Puzzles.ShuffleSolvable(Tiles);
         Moves = 0;
         IsSolved = false;
+        isInitialized = true;
     }
 
-    void Reshuffle()
+    void ResetGame()
     {
         Puzzles.ShuffleSolvable(Tiles);
         Moves = 0;
         IsSolved = false;
     }
 
-    void MoveTile(Tile tile)
+    async Task Reshuffle()
     {
-        if (IsSolved) return;
+        ResetGame();
+        await PlayClickButtonSound();
+    }
 
+    async Task Restart()
+    {
+        ResetGame();
+        await PlayGameLoopSound();
+    }
+
+    async Task MoveTile(Tile tile)
+    {
         var empty = Tiles.First(t => t.IsEmpty);
         if (!Puzzles.CanMove(tile, empty)) return;
 
@@ -71,5 +103,53 @@
 
         Moves++;
         IsSolved = Puzzles.IsSolved(Tiles);
+
+        await PlayTileMoveSound();
+
+        if (IsSolved)
+        {
+            await StopGameLoopSound();
+            return;
+        }
+    }
+
+    private async Task PlayClickButtonSound()
+    {
+        if (JsRuntime != null)
+        {
+            await JsRuntime.InvokeVoidAsync("playClickButtonSound");
+        }
+    }
+
+    private async Task PlayTileMoveSound()
+    {
+        if (JsRuntime != null)
+        {
+            await JsRuntime.InvokeVoidAsync("playTileMoveSound");
+        }
+    }
+
+    private async Task PlayGameLoopSound()
+    {
+        if (JsRuntime != null)
+        {
+            await JsRuntime.InvokeVoidAsync("playGameLoopSound");
+        }
+    }
+
+    private async Task StopGameLoopSound()
+    {
+        if (JsRuntime != null)
+        {
+            await JsRuntime.InvokeVoidAsync("stopGameLoopSound");
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && isInitialized)
+        {
+            await PlayGameLoopSound();
+        }
     }
 }
