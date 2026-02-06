@@ -36,3 +36,31 @@
     color: white;
     border-radius: 12px;
 }
+
+p {
+    font-family: "Gaegu", sans-serif !important;
+    font-weight: bold;
+    color: var(--primary-color) !important;
+    font-size: 36px;
+    margin-bottom: 0 !important;
+}
+
+h1 {
+    background-color: #111111;
+    font-size: 96px;
+    font-weight: bold;
+    padding-left: 35px;
+}
+
+button {
+    font-size: 36px;
+    max-width: 300px;
+}
+
+.refresh-btn {
+    background-color: #48C6BE;
+}
+
+.reset-btn {
+    background-color: #FB5A55;
+}
