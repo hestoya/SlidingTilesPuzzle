@@ -1,0 +1,35 @@
+﻿p {
+    font-family: "Gaegu", sans-serif !important;
+    font-weight: bold;
+    color: #48C6BE !important;
+    font-size: 24px;
+    margin-bottom: 0 !important;
+}
+
+span {
+    color: #EA1F41;
+}
+
+em {
+    color: var(--primary-color);
+}
+
+button {
+    font-size: 24px;
+    max-width: 200px;
+    padding: 5px 15px;
+}
+
+.performance-msg {
+    color: var(--primary-color);
+    font-family: "Gaegu", sans-serif !important;
+    font-size: 24px;
+}
+
+.refresh-btn {
+    background-color: #48C6BE;
+}
+
+.reset-btn {
+    background-color: var(--primary-color);
+}
