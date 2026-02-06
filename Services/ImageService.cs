@@ -4,7 +4,7 @@
     {
         public string GenerateImageUrl()
         {
-            return $"https://picsum.photos/600/600";
+            return $"https://picsum.photos/1000/1000";
         }
     }
 }
