@@ -1,3 +1,5 @@
+/* ===== Default Blazor CSS ===== */
+
 h1:focus {
     outline: none;
 }
@@ -28,7 +30,60 @@ h1:focus {
     border-color: #929292;
 }
 
-/* ===== Sliding Puzzle ===== */
+/* ===== Global CSS ===== */
+
+:root {
+    --primary-color: #FAB069;
+    --secondary-color: #FB5A55;
+}
+
+body {
+    background-color: #191919 !important;
+}
+
+button {
+    font-family: "Gaegu", sans-serif !important;
+    border-radius: 20px !important;
+    font-weight: bold !important;
+    border: none;
+}
+
+
+h1, h2 {
+    font-family: "Gaegu", sans-serif;
+    color: var(--primary-color) !important;
+}
+
+h3, h4, h5, h6 {
+    font-family: "Gaegu", sans-serif;
+    color: var(--secondary-color) !important;
+}
+
+.title {
+    background-color: #111111;
+    text-align: center;
+    font-size: 128px;
+/*    font-size: clamp(2rem, 5vw, 4rem);*/
+    font-weight: bold;
+    width: 100%;
+}
+
+.challenge {
+    font-size: 40px;
+    font-weight: bold;
+    /*    font-size: clamp(1.2rem, 3vw, 1.8rem);*/
+}
+
+.start-btn {
+    max-width: 225px !important;
+    min-width: 100px !important;
+    font-size: 64px;
+    font-weight: bold;
+    background-color: #48C6BE;
+    padding: 0 20px 0 20px;
+}
+
+/* ===== Sliding Tiles Puzzle CSS ===== */
 
 .puzzle-layout {
     display: flex;
@@ -37,9 +92,9 @@ h1:focus {
 
 .board {
     position: relative;
-    width: 600px; /* 3 tiles x 200px */
-    height: 600px;
-    border: 2px solid #333;
+    width: 620px;
+    height: 620px;
+    border: 10px solid #111111;
 }
 
 .tile {
@@ -55,30 +110,22 @@ h1:focus {
 .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,.65);
+    background: rgba(0,0,0,.5);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .overlay-content {
-    background: #111;
+    background: #191919;
     padding: 24px;
     color: white;
     border-radius: 12px;
 }
 
-
-.nav {
-    padding: 10px;
-    background: #111;
-    display: flex;
-    gap: 15px;
+i {
+    font-size: 4rem;
+    color: var(--primary-color);
 }
-
-    .nav a {
-        color: white;
-        text-decoration: none;
-    }
 
 
