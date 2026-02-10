@@ -101,7 +101,7 @@ h3, h4, h5, h6 {
     position: absolute;
     width: 200px;
     height: 200px;
-    background-size: 600px 600px; /* must match board size */
+    background-size: 600px 600px;
     transition: transform 0.25s ease-in-out;
     cursor: pointer;
 }
