@@ -27,28 +27,26 @@ let gameLoopAudio = null;
 
 window.playGameLoopSound = () => {
     if (!gameLoopAudio) {
-        // Create and start the audio only if it hasn't been created already
         gameLoopAudio = new Audio('assets/sounds/game-loop2.mp3');
-        gameLoopAudio.loop = true;  // Loop the sound for the duration of the game
+        gameLoopAudio.loop = true; 
     }
     gameLoopAudio.play().catch(e => console.error('Audio play error:', e));
 };
 
-// Function to stop (pause) the game loop sound
 window.stopGameLoopSound = () => {
     if (gameLoopAudio) {
-        gameLoopAudio.pause();  // Pause the audio
-        gameLoopAudio.currentTime = 0;  // Optionally reset to the start
+        gameLoopAudio.pause();
+        gameLoopAudio.currentTime = 0;
     }
 };
 
 window.playTileMoveSound = () => {
-    var audio = new Audio('assets/sounds/swipe.mp3'); // Path to the sound for tile moves
+    var audio = new Audio('assets/sounds/swipe.mp3');
     audio.play().catch(e => console.error('Audio play error:', e));
 };
 
 window.playStartButtonSound = () => {
-    var audio = new Audio('assets/sounds/start.mp3'); // Path to the sound for tile moves
+    var audio = new Audio('assets/sounds/start.mp3');
     audio.play().catch(e => console.error('Audio play error:', e));
 };
 
