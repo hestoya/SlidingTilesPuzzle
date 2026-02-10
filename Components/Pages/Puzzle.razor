@@ -41,6 +41,10 @@
                             OnRetry="Restart"
                             OnNew="NewGame" />
             </div>
+
+            <span class="position-fixed bottom-0 end-0 mb-4 me-4 p-3" @onclick="ToggleSound">
+                <i class="@soundIcon"></i>
+            </span>
         </div>
     </div>
 </div>
@@ -52,6 +56,8 @@
     bool IsSolved;
     bool isInitialized = false;
     bool isFirstRender = true;
+    private bool isSoundPlaying = true;
+    private string soundIcon => isSoundPlaying ? "bi-volume-up" : "bi-volume-mute";
 
     protected override void OnInitialized()
     {
@@ -113,6 +119,20 @@
         }
     }
 
+    async Task ToggleSound()
+    {
+        if (isSoundPlaying)
+        {
+            await StopGameLoopSound();
+        }
+        else
+        {
+            await PlayGameLoopSound();
+        }
+
+        isSoundPlaying = !isSoundPlaying;
+    }
+
     private async Task PlayClickButtonSound()
     {
         if (JsRuntime != null)
@@ -147,7 +167,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && isInitialized)
+        if (firstRender && isInitialized && isSoundPlaying)
         {
             await PlayGameLoopSound();
         }

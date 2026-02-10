@@ -22,33 +22,27 @@
 
 
 @code {
-    // Track whether the game loop sound is currently playing
     private bool isSoundPlaying = false;
     private string soundIcon => isSoundPlaying ? "bi-volume-up" : "bi-volume-mute";
 
-    // Handle the sound toggle action
     async Task ToggleSound()
     {
         if (isSoundPlaying)
         {
-            // Stop the game loop sound
             await JsRuntime.InvokeVoidAsync("stopHomeLoopSound");
         }
         else
         {
-            // Play the game loop sound
             await JsRuntime.InvokeVoidAsync("playHomeLoopSound");
         }
 
-        // Toggle the sound state
         isSoundPlaying = !isSoundPlaying;
     }
 
     async Task Start()
     {
-        // Stop the home loop sound (if it's playing)
         await JsRuntime.InvokeVoidAsync("stopHomeLoopSound");
-        await JsRuntime.InvokeVoidAsync("playStartButtonSound");  // Play start button sound
-        Nav.NavigateTo("/puzzle");  // Navigate to the puzzle page
+        await JsRuntime.InvokeVoidAsync("playStartButtonSound");
+        Nav.NavigateTo("/puzzle");
     }
 }
