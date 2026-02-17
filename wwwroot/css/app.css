@@ -128,4 +128,6 @@ i {
     color: var(--primary-color);
 }
 
-
+.cursor-pointer {
+    cursor: pointer !important;
+}

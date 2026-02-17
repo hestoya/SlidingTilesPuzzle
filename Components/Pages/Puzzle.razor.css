@@ -64,3 +64,7 @@ button {
 .reset-btn {
     background-color: #FB5A55;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

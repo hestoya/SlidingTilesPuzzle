@@ -23,7 +23,7 @@
 
 @code {
     private bool isSoundPlaying = false;
-    private string soundIcon => isSoundPlaying ? "bi-volume-up" : "bi-volume-mute";
+    private string soundIcon => isSoundPlaying ? "bi-volume-up cursor-pointer" : "bi-volume-mute cursor-pointer";
 
     async Task ToggleSound()
     {
