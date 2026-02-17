@@ -17,30 +17,3 @@
         </div>
     </div>
 }
-
-@code {
-    [Parameter] public bool Visible { get; set; }
-    [Parameter] public int Moves { get; set; }
-    [Parameter] public EventCallback OnRetry { get; set; }
-    [Parameter] public EventCallback OnNew { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (Visible && JsRuntime != null)
-        {
-            await JsRuntime.InvokeVoidAsync("launchConfetti");
-            await JsRuntime.InvokeVoidAsync("playWinSound");
-        }
-    }
-
-    private string Performance => Moves switch
-    {
-        <= 22 => "You are an absolute legend. Way to go, champ!",
-        <= 30 => "Insane moves! That was clean!",
-        <= 40 => "Solid play! You got skills!",
-        <= 55 => "Nicely done! You stayed in control.",
-        <= 75 => "Hey, a win is a win!",
-        _ => "You fought bravely… and you won."
-    };
-
-}

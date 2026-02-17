@@ -2,7 +2,7 @@
 @inject NavigationManager Nav
 @inject IJSRuntime JsRuntime
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Sliding Tiles Puzzle</PageTitle>
 
 <div class="vh-100 d-flex flex-column justify-content-center align-items-center text-center">
     <h1 class="title">SLIDING TILES PUZZLE</h1>
@@ -19,30 +19,3 @@
         <i class="@soundIcon"></i>
     </span>
 </div>
-
-
-@code {
-    private bool isSoundPlaying = false;
-    private string soundIcon => isSoundPlaying ? "bi-volume-up cursor-pointer" : "bi-volume-mute cursor-pointer";
-
-    async Task ToggleSound()
-    {
-        if (isSoundPlaying)
-        {
-            await JsRuntime.InvokeVoidAsync("stopHomeLoopSound");
-        }
-        else
-        {
-            await JsRuntime.InvokeVoidAsync("playHomeLoopSound");
-        }
-
-        isSoundPlaying = !isSoundPlaying;
-    }
-
-    async Task Start()
-    {
-        await JsRuntime.InvokeVoidAsync("stopHomeLoopSound");
-        await JsRuntime.InvokeVoidAsync("playStartButtonSound");
-        Nav.NavigateTo("/puzzle");
-    }
-}
