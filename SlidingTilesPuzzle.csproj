@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\font\" />
+    <Folder Include="wwwroot\assets\screenshots\" />
   </ItemGroup>
 
 </Project>
