@@ -17,13 +17,13 @@ A modern implementation of the classic 3x3 sliding puzzle game built using **Bla
 ## 🖥️ UI Preview
 
 ### Home Interface
-![Home UI](./screenshots/home-ui.png)
+![Home UI](/screenshots/home-ui.png)
 
 ### Main Game Interface
-![Game UI](./screenshots/game-ui.png)
+![Game UI](/screenshots/game-ui.png)
 
 ### Winning State
-![Win UI](./screenshots/win-ui.png)
+![Win UI](/screenshots/win-ui.png)
 
 ---
 
