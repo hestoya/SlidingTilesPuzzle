@@ -6,8 +6,8 @@ A modern implementation of the classic 3x3 sliding puzzle game built using **Bla
 
 ## 🎮 Features
 - Interactive 3x3 sliding puzzle
-- Responsive UI design (desktop & mobile)
 - Smooth tile movements
+- Moves counter
 - Win state detection
 - Background music for enhanced gameplay experience
 - Clean Bootstrap-styled layout
